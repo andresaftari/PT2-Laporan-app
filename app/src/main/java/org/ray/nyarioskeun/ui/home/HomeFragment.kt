@@ -1,6 +1,7 @@
 package org.ray.nyarioskeun.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.data.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
+import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
 
 class HomeFragment : Fragment() {
@@ -22,6 +25,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+
+        if (activity?.intent!!.hasExtra("EXTRA_USERNAME")) {
+            val loginUsername = activity?.intent?.getStringExtra("EXTRA_USERNAME")
+            Log.d("Testing_dulu", "$loginUsername")
+
+            (activity as MainActivity).supportActionBar?.title = loginUsername
+        }
+
         getMenu()
         return binding.root
     }
@@ -39,31 +50,31 @@ class HomeFragment : Fragment() {
         menuAdapter = MenuAdapter(
             arrListMenu
         ) { position, item ->
-            val bundle: Bundle
+            val bundle = bundleOf("status" to item.name)
 
             when (position) {
                 0 -> {
-                    bundle = bundleOf("status" to "Dosen")
+                    Log.d("$ARGUMENTS_CHECK.dosen", "${bundle.get("status")}")
                     findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
                 }
                 1 -> {
-                    bundle = bundleOf("status" to "Mahasiswa")
+                    Log.d("$ARGUMENTS_CHECK.mahasiswa", "${bundle.get("status")}")
                     findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
                 }
                 2 -> {
-                    bundle = bundleOf("status" to "Karyawan")
+                    Log.d("$ARGUMENTS_CHECK.karyawan", "${bundle.get("status")}")
                     findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
                 }
                 3 -> {
-                    bundle = bundleOf("status" to "Petugas Kantin")
+                    Log.d("$ARGUMENTS_CHECK.kantin", "${bundle.get("status")}")
                     findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
                 }
                 4 -> {
-                    bundle = bundleOf("status" to "Petugas TMart")
+                    Log.d("$ARGUMENTS_CHECK.tmart", "${bundle.get("status")}")
                     findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
                 }
                 5 -> {
-                    bundle = bundleOf("status" to "Orang Tua")
+                    Log.d("$ARGUMENTS_CHECK.ot", "${bundle.get("status")}")
                     findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
                 }
             }
