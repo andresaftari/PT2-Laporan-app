@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
 import com.google.android.material.snackbar.Snackbar
 import org.ray.nyarioskeun.databinding.ActivityRegisterBinding
 
@@ -37,19 +38,29 @@ class RegisterActivity : AppCompatActivity() {
         with(binding) {
             when {
                 TextUtils.isEmpty(fullname) -> {
-                    edtName.error = "Silakan isi nama lengkap terlebih dahulu"
+                    edtName.error = "Silakan isi nama lengkap terlebih dahulu!"
                     edtName.requestFocus()
                 }
                 TextUtils.isEmpty(username) -> {
-                    edtUsername.error = "Silakan isi username terlebih dahulu"
+                    edtUsername.error = "Silakan isi username terlebih dahulu!"
                     edtUsername.requestFocus()
                 }
                 TextUtils.isEmpty(pass) -> {
-                    edtPassword.error = "Silakan isi password terlebih dahulu"
+                    edtPassword.error = "Silakan isi password terlebih dahulu!"
                     edtPassword.requestFocus()
                 }
                 TextUtils.isEmpty(confirm) -> {
-                    edtConfirmPass.error = "Silakan konfirmasi password"
+                    edtConfirmPass.error = "Silakan konfirmasi password!"
+                    edtConfirmPass.requestFocus()
+                }
+                pass.length < 8 || pass.isDigitsOnly() -> {
+                    edtPassword.error = "Password minimal 8 karakter dengan kombinasi alfanumerik!"
+                    edtPassword.requestFocus()
+                }
+                pass != confirm -> {
+                    edtPassword.error = "Password tidak sama!"
+                    edtPassword.requestFocus()
+                    edtConfirmPass.error = "Password tidak sama!"
                     edtConfirmPass.requestFocus()
                 }
                 else -> {
