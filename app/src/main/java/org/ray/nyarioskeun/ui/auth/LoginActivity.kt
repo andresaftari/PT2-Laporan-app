@@ -3,10 +3,12 @@ package org.ray.nyarioskeun.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.databinding.ActivityLoginBinding
+import org.ray.nyarioskeun.utils.LOGIN_CHECK
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -56,6 +58,8 @@ class LoginActivity : AppCompatActivity() {
                         "Selamat datang, $username!",
                         Snackbar.LENGTH_SHORT
                     ).show()
+
+                    Log.d("$LOGIN_CHECK.InputCheck", "$username, $pass")
 
                     val background = object : Thread() {
                         override fun run() {

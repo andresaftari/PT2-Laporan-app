@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/reportFragment"
-        android:name="org.ray.nyarioskeun.ui.home.ReportFragment"
+        android:name="org.ray.nyarioskeun.ui.report.ReportFragment"
         android:label="fragment_report"
         tools:layout="@layout/fragment_report" />
 </navigation>

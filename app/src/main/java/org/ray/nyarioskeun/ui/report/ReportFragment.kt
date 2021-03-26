@@ -1,4 +1,4 @@
-package org.ray.nyarioskeun.ui.home
+package org.ray.nyarioskeun.ui.report
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -3,10 +3,12 @@ package org.ray.nyarioskeun.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
 import com.google.android.material.snackbar.Snackbar
 import org.ray.nyarioskeun.databinding.ActivityRegisterBinding
+import org.ray.nyarioskeun.utils.REGISTER_CHECK
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -69,6 +71,11 @@ class RegisterActivity : AppCompatActivity() {
                         "Registrasi berhasil! Silakan login dengan akunmu!",
                         Snackbar.LENGTH_SHORT
                     ).show()
+
+                    Log.d(
+                        "$REGISTER_CHECK.InputCheck",
+                        "$fullname, $username, $pass, $confirm"
+                    )
 
                     val background = object : Thread() {
                         override fun run() {

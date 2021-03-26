@@ -24,7 +24,7 @@ class SplashScreen : AppCompatActivity() {
                     finish()
                 } catch (e: Exception) {
                     Log.i(
-                        "$SPLASH_SCREEN_TAG.Splash",
+                        "$SPLASH_SCREEN_TAG.Process",
                         "Failed! ${e.localizedMessage}"
                     )
                 }
