@@ -7,7 +7,18 @@
     <string name="text_report">LAPORAN</string>
     <string name="text_login">LOGIN</string>
     <string name="text_signup">SIGN UP</string>
+    <string name="text_register">Register</string>
+    <string name="text_igracias">Sign in with Igracias</string>
+    <string name="text_to_register">I\'m not registered!</string>
+    <string name="text_to_login">I have an account!</string>
+
+    <!-- Temporary Text -->
+    <string name="text_sample_splash">SAMPLE SPLASH</string>
 
     <!-- Splash -->
-    <string name="text_sample_splash">SAMPLE SPLASH</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_fullname">Nama Lengkap</string>
+    <string name="hint_confirm_pass">Confirm Password</string>
+    <string name="hint_email">Email</string>
 </resources>

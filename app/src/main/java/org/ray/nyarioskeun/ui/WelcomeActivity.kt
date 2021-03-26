@@ -2,10 +2,10 @@ package org.ray.nyarioskeun.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.databinding.ActivityWelcomeBinding
+import org.ray.nyarioskeun.ui.auth.LoginActivity
+import org.ray.nyarioskeun.ui.auth.RegisterActivity
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -17,34 +17,18 @@ class WelcomeActivity : AppCompatActivity() {
 
         with(binding) {
             btnLogin.setOnClickListener {
-                Toast.makeText(
-                    this@WelcomeActivity,
-                    "Sabar yaaaa beb, masih dalam pengembangan",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                Thread.sleep(500)
-
                 startActivity(
                     Intent(
                         this@WelcomeActivity,
-                        MainActivity::class.java
+                        LoginActivity::class.java
                     )
                 )
             }
             btnRegister.setOnClickListener {
-                Toast.makeText(
-                    this@WelcomeActivity,
-                    "Sabar yaaaa beb, masih dalam pengembangan",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                Thread.sleep(500)
-
                 startActivity(
                     Intent(
                         this@WelcomeActivity,
-                        MainActivity::class.java
+                        RegisterActivity::class.java
                     )
                 )
             }

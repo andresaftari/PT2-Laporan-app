@@ -13,17 +13,17 @@
         android:theme="@style/Theme.TelUNyarios">
         <activity
             android:name=".ui.WelcomeActivity"
-            android:theme="@style/NoactionBar" />
+            android:theme="@style/NoActionBar" />
         <activity
             android:name=".ui.auth.RegisterActivity"
-            android:theme="@style/NoactionBar" />
+            android:theme="@style/MaterialNoActionBar" />
         <activity android:name=".ui.SuccessActivity" />
         <activity
             android:name=".ui.auth.LoginActivity"
-            android:theme="@style/NoactionBar" />
+            android:theme="@style/MaterialNoActionBar" />
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/NoactionBar">
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
