@@ -7,7 +7,7 @@
     tools:context=".SplashScreen">
 
     <ImageView
-        android:id="@+id/iv_coverSplash"
+        android:id="@+id/iv_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"

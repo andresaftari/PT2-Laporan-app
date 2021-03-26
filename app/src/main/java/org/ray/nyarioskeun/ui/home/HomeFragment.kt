@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.data.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
@@ -37,8 +38,35 @@ class HomeFragment : Fragment() {
 
         menuAdapter = MenuAdapter(
             arrListMenu
-        ) { _, item ->
-            Snackbar.make(requireView(), "Clicked ${item.name}", Snackbar.LENGTH_SHORT).show()
+        ) { position, item ->
+            val bundle: Bundle
+
+            when (position) {
+                0 -> {
+                    bundle = bundleOf("status" to "Dosen")
+                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                }
+                1 -> {
+                    bundle = bundleOf("status" to "Mahasiswa")
+                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                }
+                2 -> {
+                    bundle = bundleOf("status" to "Karyawan")
+                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                }
+                3 -> {
+                    bundle = bundleOf("status" to "Petugas Kantin")
+                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                }
+                4 -> {
+                    bundle = bundleOf("status" to "Petugas TMart")
+                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                }
+                5 -> {
+                    bundle = bundleOf("status" to "Orang Tua")
+                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                }
+            }
         }
 
         with(binding.rvMain) {

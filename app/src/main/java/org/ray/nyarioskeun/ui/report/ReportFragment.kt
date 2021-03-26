@@ -15,6 +15,10 @@ class ReportFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentReportBinding.inflate(layoutInflater, container, false)
+
+        val data = arguments?.get("status")
+        binding.test.text = data.toString()
+
         return binding.root
     }
 }
