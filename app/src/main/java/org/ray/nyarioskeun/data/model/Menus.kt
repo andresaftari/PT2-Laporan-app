@@ -1,6 +1,6 @@
 package org.ray.nyarioskeun.data.model
 
-data class Menu(
+data class Menus(
     val thumbnail: Int,
     val name: String
 )

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.ray.nyarioskeun.data.model.Menu
+import org.ray.nyarioskeun.data.model.Menus
 import org.ray.nyarioskeun.databinding.ItemMenuBinding
 
-class MenuAdapter(private var items: ArrayList<Menu>, var handler: (Int, Menu) -> Unit) :
+class MenuAdapter(private var items: ArrayList<Menus>, var handler: (Int, Menus) -> Unit) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,7 +24,7 @@ class MenuAdapter(private var items: ArrayList<Menu>, var handler: (Int, Menu) -
     }
 
     class ViewHolder(val binding: ItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(menu: Menu) = with(binding) {
+        fun bind(menu: Menus) = with(binding) {
             Glide.with(this.root)
                 .load(menu.thumbnail)
                 .into(ivMenu)

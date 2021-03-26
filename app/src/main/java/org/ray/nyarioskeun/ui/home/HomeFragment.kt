@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.ray.nyarioskeun.R
-import org.ray.nyarioskeun.data.model.Menu
+import org.ray.nyarioskeun.data.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
 import org.ray.nyarioskeun.utils.MenuAdapter
 
@@ -27,12 +27,12 @@ class HomeFragment : Fragment() {
 
     private fun getMenu() {
         val arrListMenu = arrayListOf(
-            Menu(R.drawable.lecture, "DOSEN"),
-            Menu(R.drawable.student, "MAHASISWA"),
-            Menu(R.drawable.employee, "KARYAWAN"),
-            Menu(R.drawable.canteen, "PETUGAS KANTIN"),
-            Menu(R.drawable.tmart, "PETUGAS TMART"),
-            Menu(R.drawable.parent, "ORANG TUA")
+            Menus(R.drawable.lecture, "DOSEN"),
+            Menus(R.drawable.student, "MAHASISWA"),
+            Menus(R.drawable.employee, "KARYAWAN"),
+            Menus(R.drawable.canteen, "PETUGAS KANTIN"),
+            Menus(R.drawable.tmart, "PETUGAS TMART"),
+            Menus(R.drawable.parent, "ORANG TUA")
         )
 
         menuAdapter = MenuAdapter(
