@@ -1,4 +1,4 @@
-package org.ray.nyarioskeun.data.model
+package org.ray.nyarioskeun.data.local.model
 
 data class Menus(
     val thumbnail: Int,

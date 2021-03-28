@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import org.ray.nyarioskeun.R
-import org.ray.nyarioskeun.data.model.Account
+import org.ray.nyarioskeun.data.local.model.Account
 import org.ray.nyarioskeun.databinding.FragmentReportBinding
 import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import org.ray.nyarioskeun.data.model.Account
+import org.ray.nyarioskeun.data.local.model.Account
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 
 class MainActivity : AppCompatActivity() {

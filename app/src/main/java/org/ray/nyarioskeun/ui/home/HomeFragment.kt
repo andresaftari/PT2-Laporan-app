@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
-import org.ray.nyarioskeun.data.model.Account
-import org.ray.nyarioskeun.data.model.Menus
+import org.ray.nyarioskeun.data.local.model.Account
+import org.ray.nyarioskeun.data.local.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter

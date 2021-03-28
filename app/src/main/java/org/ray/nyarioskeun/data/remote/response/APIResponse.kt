@@ -1,0 +1,1 @@
+package org.ray.nyarioskeun.data.remote.response

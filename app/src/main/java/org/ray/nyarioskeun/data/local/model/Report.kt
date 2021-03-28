@@ -1,4 +1,4 @@
-package org.ray.nyarioskeun.data.model
+package org.ray.nyarioskeun.data.local.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

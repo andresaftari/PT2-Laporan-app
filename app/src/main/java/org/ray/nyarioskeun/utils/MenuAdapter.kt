@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.ray.nyarioskeun.data.model.Menus
+import org.ray.nyarioskeun.data.local.model.Menus
 import org.ray.nyarioskeun.databinding.ItemMenuBinding
 
 class MenuAdapter(private var items: ArrayList<Menus>, var handler: (Int, Menus) -> Unit) :
