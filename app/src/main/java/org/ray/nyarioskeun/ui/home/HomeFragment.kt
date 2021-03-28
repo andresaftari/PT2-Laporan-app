@@ -5,12 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
+import org.ray.nyarioskeun.data.model.Account
 import org.ray.nyarioskeun.data.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
@@ -19,6 +19,7 @@ import org.ray.nyarioskeun.utils.MenuAdapter
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var menuAdapter: MenuAdapter
+    private var account = Account()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
             Log.d("Testing_dulu", "$loginUsername")
 
             (activity as MainActivity).supportActionBar?.title = loginUsername
+            account = Account(fullname = loginUsername)
         }
 
         getMenu()
@@ -39,43 +41,67 @@ class HomeFragment : Fragment() {
 
     private fun getMenu() {
         val arrListMenu = arrayListOf(
-            Menus(R.drawable.lecture, "DOSEN"),
-            Menus(R.drawable.student, "MAHASISWA"),
-            Menus(R.drawable.employee, "KARYAWAN"),
-            Menus(R.drawable.canteen, "PETUGAS KANTIN"),
-            Menus(R.drawable.tmart, "PETUGAS TMART"),
-            Menus(R.drawable.parent, "ORANG TUA")
+            Menus(R.drawable.lecture, "Dosen"),
+            Menus(R.drawable.student, "Mahasiswa"),
+            Menus(R.drawable.employee, "Karyawan"),
+            Menus(R.drawable.canteen, "Kantin"),
+            Menus(R.drawable.tmart, "Pegawai TMart"),
+            Menus(R.drawable.parent, "Orang Tua")
         )
 
         menuAdapter = MenuAdapter(
             arrListMenu
         ) { position, item ->
-            val bundle = bundleOf("status" to item.name)
+            val bundleStatus = Bundle()
+            with(bundleStatus) {
+                putString("status", item.name)
+                putParcelable("account", account)
+            }
+
+            Log.d("$ARGUMENTS_CHECK.account", account.toString())
 
             when (position) {
                 0 -> {
-                    Log.d("$ARGUMENTS_CHECK.dosen", "${bundle.get("status")}")
-                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                    Log.d("$ARGUMENTS_CHECK.dosen", "${bundleStatus.get("status")}")
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_reportFragment,
+                        bundleStatus
+                    )
                 }
                 1 -> {
-                    Log.d("$ARGUMENTS_CHECK.mahasiswa", "${bundle.get("status")}")
-                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                    Log.d("$ARGUMENTS_CHECK.mahasiswa", "${bundleStatus.get("status")}")
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_reportFragment,
+                        bundleStatus
+                    )
                 }
                 2 -> {
-                    Log.d("$ARGUMENTS_CHECK.karyawan", "${bundle.get("status")}")
-                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                    Log.d("$ARGUMENTS_CHECK.karyawan", "${bundleStatus.get("status")}")
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_reportFragment,
+                        bundleStatus
+                    )
                 }
                 3 -> {
-                    Log.d("$ARGUMENTS_CHECK.kantin", "${bundle.get("status")}")
-                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                    Log.d("$ARGUMENTS_CHECK.kantin", "${bundleStatus.get("status")}")
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_reportFragment,
+                        bundleStatus
+                    )
                 }
                 4 -> {
-                    Log.d("$ARGUMENTS_CHECK.tmart", "${bundle.get("status")}")
-                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                    Log.d("$ARGUMENTS_CHECK.tmart", "${bundleStatus.get("status")}")
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_reportFragment,
+                        bundleStatus
+                    )
                 }
                 5 -> {
-                    Log.d("$ARGUMENTS_CHECK.ot", "${bundle.get("status")}")
-                    findNavController().navigate(R.id.action_homeFragment_to_reportFragment, bundle)
+                    Log.d("$ARGUMENTS_CHECK.ot", "${bundleStatus.get("status")}")
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_reportFragment,
+                        bundleStatus
+                    )
                 }
             }
         }

@@ -11,14 +11,19 @@
     <string name="text_igracias">Sign in with Igracias</string>
     <string name="text_to_register">I\'m not registered!</string>
     <string name="text_to_login">I have an account!</string>
+    <string name="text_nama_pelapor">Nama Pelapor</string>
+    <string name="text_status">Status Pelapor</string>
+    <string name="text_submit">Submit</string>
 
-    <!-- Temporary Text -->
-    <string name="text_sample_splash">SAMPLE SPLASH</string>
-
-    <!-- Splash -->
+    <!-- Hint -->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_fullname">Nama Lengkap</string>
     <string name="hint_confirm_pass">Confirm Password</string>
     <string name="hint_email">Email</string>
+    <string name="hint_report_date">Tanggal Melapor</string>
+    <string name="hint_problem">Masalah</string>
+    <string name="hint_location">Lokasi</string>
+    <string name="hint_evidence">Bukti Keluhan</string>
+    <string name="hint_description">Deskripsi</string>
 </resources>

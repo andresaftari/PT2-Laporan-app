@@ -8,5 +8,6 @@ data class Account(
     val username: String? = "",
     val password: String? = "",
     val email: String? = "",
-    val fullname: String? = ""
+    val fullname: String? = "",
+    val status: String? = ""
 ) : Parcelable

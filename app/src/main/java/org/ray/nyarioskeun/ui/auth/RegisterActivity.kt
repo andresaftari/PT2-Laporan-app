@@ -36,6 +36,13 @@ class RegisterActivity : AppCompatActivity() {
         val username = binding.edtUsername.text.toString()
         val pass = binding.edtPassword.text.toString()
         val confirm = binding.edtConfirmPass.text.toString()
+        val email = binding.edtEmail.text.toString()
+
+        val isNotEmail = (
+                !email.contains(".ac.id") ||
+                        !email.contains(".com") ||
+                        !email.contains(".co.id")
+                )
 
         with(binding) {
             when {
@@ -51,9 +58,17 @@ class RegisterActivity : AppCompatActivity() {
                     edtPassword.error = "Silakan isi password terlebih dahulu!"
                     edtPassword.requestFocus()
                 }
+                TextUtils.isEmpty(email) -> {
+                    edtEmail.error = "Silakan isi email terlebih dahulu!"
+                    edtEmail.requestFocus()
+                }
                 TextUtils.isEmpty(confirm) -> {
                     edtConfirmPass.error = "Silakan konfirmasi password!"
                     edtConfirmPass.requestFocus()
+                }
+                !email.contains("@") && isNotEmail -> {
+                    edtEmail.error = "Silakan isi format email dengan benar!"
+                    edtEmail.requestFocus()
                 }
                 pass.length < 8 || pass.isDigitsOnly() -> {
                     edtPassword.error = "Password minimal 8 karakter dengan kombinasi alfanumerik!"

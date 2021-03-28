@@ -3,8 +3,8 @@
     <color name="red_primary">#B6252A</color>
     <color name="red_secondary">#D90429</color>
     <color name="purple_700">#DC4065</color>
-    <color name="teal_200">#FEE8DCDC</color>
-    <color name="teal_700">#FEE8DCDC</color>
+    <color name="teal_700">#FE871313</color>
+    <color name="teal_200">#FEF46E6E</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

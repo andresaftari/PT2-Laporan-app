@@ -9,9 +9,6 @@ import org.ray.nyarioskeun.databinding.ItemMenuBinding
 
 class MenuAdapter(private var items: ArrayList<Menus>, var handler: (Int, Menus) -> Unit) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    )
 
     override fun getItemCount() = items.size
 
@@ -22,6 +19,10 @@ class MenuAdapter(private var items: ArrayList<Menus>, var handler: (Int, Menus)
             binding.root.setOnClickListener { handler(position, item) }
         }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     class ViewHolder(val binding: ItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(menu: Menus) = with(binding) {
