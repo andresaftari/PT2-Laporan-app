@@ -6,6 +6,8 @@ const val LOGIN_CHECK = "Login"
 const val REGISTER_CHECK = "Register"
 const val ARGUMENTS_CHECK = "Args"
 const val PASSED_DATA_CHECK = "Passed"
+const val DATE_CHECK = "DATE"
+const val IMAGE_PICKER_CHECK = "IMAGEPICK"
 
 // API
 const val API_BASE_URL = ""

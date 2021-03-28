@@ -15,6 +15,7 @@ import org.ray.nyarioskeun.data.local.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
+import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -27,18 +28,27 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
+        // Set username di actionbar title
         if (activity?.intent!!.hasExtra("EXTRA_USERNAME")) {
             val loginUsername = activity?.intent?.getStringExtra("EXTRA_USERNAME")
-            Log.d("Testing_dulu", "$loginUsername")
+            Log.d("$PASSED_DATA_CHECK.username", "$loginUsername")
 
             (activity as MainActivity).supportActionBar?.title = loginUsername
             account = Account(fullname = loginUsername)
+        }
+        if (activity?.intent!!.hasExtra("EXTRA_ACCOUNT_RETURN")) {
+            val fullname = activity?.intent?.getStringExtra("EXTRA_ACCOUNT_RETURN")
+            Log.d("$PASSED_DATA_CHECK.fullname", "$fullname")
+
+            (activity as MainActivity).supportActionBar?.title = fullname
+            account = Account(fullname = fullname)
         }
 
         getMenu()
         return binding.root
     }
 
+    // Load main menu
     private fun getMenu() {
         val arrListMenu = arrayListOf(
             Menus(R.drawable.lecture, "Dosen"),
@@ -52,6 +62,7 @@ class HomeFragment : Fragment() {
         menuAdapter = MenuAdapter(
             arrListMenu
         ) { position, item ->
+            // Passing user data
             val bundleStatus = Bundle()
             with(bundleStatus) {
                 putString("status", item.name)

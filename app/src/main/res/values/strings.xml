@@ -26,4 +26,5 @@
     <string name="hint_location">Lokasi</string>
     <string name="hint_evidence">Bukti Keluhan</string>
     <string name="hint_description">Deskripsi</string>
+    <string name="text_success">Laporan berhasil terkirim!</string>
 </resources>
