@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // Start login
     private fun setLogin() {
         val username = binding.edtLogin.text.toString()
         val pass = binding.edtPass.text.toString()
@@ -71,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
                                     MainActivity::class.java
                                 ).putExtra("EXTRA_USERNAME", username)
                             )
+                            finish()
                         }
                     }
                     background.start()

@@ -59,16 +59,14 @@ class HomeFragment : Fragment() {
             Menus(R.drawable.parent, "Orang Tua")
         )
 
-        menuAdapter = MenuAdapter(
-            arrListMenu
-        ) { position, item ->
+        menuAdapter = MenuAdapter(arrListMenu) { position, item ->
             // Passing user data
             val bundleStatus = Bundle()
+
             with(bundleStatus) {
                 putString("status", item.name)
                 putParcelable("account", account)
             }
-
             Log.d("$ARGUMENTS_CHECK.account", account.toString())
 
             when (position) {

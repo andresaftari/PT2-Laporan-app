@@ -133,6 +133,7 @@ class ReportFragment : Fragment() {
                         SuccessActivity::class.java
                     ).putExtra("EXTRA_ACCOUNT", userAccount!!.fullname.toString())
                 )
+                activity?.finish()
             }
         }
         background.start()
@@ -224,5 +225,14 @@ class ReportFragment : Fragment() {
                 override fun afterTextChanged(text: Editable?) {}
             })
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
+    companion object {
+        private const val USERNAME_STATE = "USERNAME"
+        private const val STATUS_STATE = "STATUS"
     }
 }
