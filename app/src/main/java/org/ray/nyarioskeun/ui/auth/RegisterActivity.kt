@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
 import com.google.android.material.snackbar.Snackbar
+import org.ray.core.utils.REGISTER_CHECK
 import org.ray.nyarioskeun.databinding.ActivityRegisterBinding
-import org.ray.nyarioskeun.utils.REGISTER_CHECK
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding

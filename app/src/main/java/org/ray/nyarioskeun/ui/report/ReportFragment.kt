@@ -16,14 +16,14 @@ import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.model.Image
 import com.google.android.material.snackbar.Snackbar
+import org.ray.core.data.local.entity.AccountEntity
+import org.ray.core.utils.DATE_CHECK
+import org.ray.core.utils.IMAGE_PICKER_CHECK
+import org.ray.core.utils.ImageCompressor
+import org.ray.core.utils.PASSED_DATA_CHECK
 import org.ray.nyarioskeun.R
-import org.ray.nyarioskeun.data.local.model.Account
 import org.ray.nyarioskeun.databinding.FragmentReportBinding
 import org.ray.nyarioskeun.ui.SuccessActivity
-import org.ray.nyarioskeun.utils.DATE_CHECK
-import org.ray.nyarioskeun.utils.IMAGE_PICKER_CHECK
-import org.ray.nyarioskeun.utils.ImageCompressor
-import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 import java.io.File
 import java.io.IOException
 import java.io.InvalidObjectException
@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ReportFragment : Fragment() {
-    private var userAccount: Account? = null
+    private var userAccount: AccountEntity? = null
     private lateinit var binding: FragmentReportBinding
     private var listLocation = listOf(
         "Kantin Asrama Putra",

@@ -1,10 +1,10 @@
-package org.ray.nyarioskeun.data.remote.api.apiService
+package org.ray.core.data.remote.api.apiService
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.ray.nyarioskeun.data.remote.api.endpoint.AuthService
-import org.ray.nyarioskeun.data.remote.api.endpoint.ReportService
-import org.ray.nyarioskeun.utils.API_BASE_URL
+import org.ray.core.data.remote.api.endpoint.AuthService
+import org.ray.core.data.remote.api.endpoint.ReportService
+import org.ray.core.utils.API_BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit

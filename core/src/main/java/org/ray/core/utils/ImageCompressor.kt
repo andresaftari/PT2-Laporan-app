@@ -1,4 +1,4 @@
-package org.ray.nyarioskeun.utils
+package org.ray.core.utils
 
 import android.content.Context
 import android.graphics.Bitmap

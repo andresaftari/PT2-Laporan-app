@@ -6,9 +6,9 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import org.ray.core.utils.LOGIN_CHECK
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.databinding.ActivityLoginBinding
-import org.ray.nyarioskeun.utils.LOGIN_CHECK
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding

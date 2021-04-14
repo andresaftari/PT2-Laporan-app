@@ -8,19 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import org.ray.core.data.local.entity.AccountEntity
+import org.ray.core.data.local.entity.MenuEntity
+import org.ray.core.utils.ARGUMENTS_CHECK
+import org.ray.core.utils.PASSED_DATA_CHECK
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
-import org.ray.nyarioskeun.data.local.model.Account
-import org.ray.nyarioskeun.data.local.model.Menus
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
-import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
-import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var menuAdapter: MenuAdapter
-    private var account = Account()
+    private var account = AccountEntity()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,14 +34,14 @@ class HomeFragment : Fragment() {
             Log.d("$PASSED_DATA_CHECK.username", "$loginUsername")
 
             (activity as MainActivity).supportActionBar?.title = loginUsername
-            account = Account(fullname = loginUsername)
+            account = AccountEntity(fullname = loginUsername)
         }
         if (activity?.intent!!.hasExtra("EXTRA_ACCOUNT_RETURN")) {
             val fullname = activity?.intent?.getStringExtra("EXTRA_ACCOUNT_RETURN")
             Log.d("$PASSED_DATA_CHECK.fullname", "$fullname")
 
             (activity as MainActivity).supportActionBar?.title = fullname
-            account = Account(fullname = fullname)
+            account = AccountEntity(fullname = fullname)
         }
 
         getMenu()
@@ -51,12 +51,12 @@ class HomeFragment : Fragment() {
     // Load main menu
     private fun getMenu() {
         val arrListMenu = arrayListOf(
-            Menus(R.drawable.lecture, "Dosen"),
-            Menus(R.drawable.student, "Mahasiswa"),
-            Menus(R.drawable.employee, "Karyawan"),
-            Menus(R.drawable.canteen, "Kantin"),
-            Menus(R.drawable.tmart, "Pegawai TMart"),
-            Menus(R.drawable.parent, "Orang Tua")
+            MenuEntity(R.drawable.lecture, "Dosen"),
+            MenuEntity(R.drawable.student, "Mahasiswa"),
+            MenuEntity(R.drawable.employee, "Karyawan"),
+            MenuEntity(R.drawable.canteen, "Kantin"),
+            MenuEntity(R.drawable.tmart, "Pegawai TMart"),
+            MenuEntity(R.drawable.parent, "Orang Tua")
         )
 
         menuAdapter = MenuAdapter(arrListMenu) { position, item ->
