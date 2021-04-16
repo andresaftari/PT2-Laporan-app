@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Report(
+    val reportid: String? = "",
     val fullname: String? = "",
     val status: Int? = 0,
     val damage: String? = "",

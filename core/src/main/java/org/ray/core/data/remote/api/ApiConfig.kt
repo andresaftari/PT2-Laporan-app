@@ -1,18 +1,17 @@
-package org.ray.core.data.remote.api.apiService
+package org.ray.core.data.remote.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.ray.core.data.remote.api.endpoint.AuthService
-import org.ray.core.data.remote.api.endpoint.ReportService
+import org.ray.core.data.remote.api.endpoint.ApiService
 import org.ray.core.utils.API_BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class ApiService {
+class ApiConfig {
     private var retrofit: Retrofit? = null
 
-    private val okHttpClientBuilder = OkHttpClient.Builder()
+    private val okHttpBuilder = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .connectTimeout(120, TimeUnit.SECONDS)
         .readTimeout(120, TimeUnit.SECONDS)
@@ -20,15 +19,15 @@ class ApiService {
         .build()
 
     fun <S> createService(serviceClass: Class<S>?): S {
-        if (retrofit == null) retrofit =
-            Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+        if (retrofit == null) {
+            retrofit = Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
-                .client(okHttpClientBuilder)
+                .client(okHttpBuilder)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
-
+        }
         return retrofit!!.create(serviceClass!!)
     }
 
-    val reportService: ReportService by lazy { createService(ReportService::class.java) }
-    val authService: AuthService by lazy { createService(AuthService::class.java) }
+    val service: ApiService by lazy { createService(ApiService::class.java) }
 }

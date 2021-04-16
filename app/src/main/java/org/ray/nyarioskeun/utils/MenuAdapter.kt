@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.ray.core.data.local.entity.MenuEntity
+import org.ray.core.domain.domainModel.Menus
 import org.ray.nyarioskeun.databinding.ItemMenuBinding
 
 class MenuAdapter(
-    private var items: ArrayList<MenuEntity>,
-    var handler: (Int, MenuEntity) -> Unit
+    private var items: ArrayList<Menus>,
+    var handler: (Int, Menus) -> Unit
 ) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 
@@ -28,7 +28,7 @@ class MenuAdapter(
     )
 
     class ViewHolder(val binding: ItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(menu: MenuEntity) = with(binding) {
+        fun bind(menu: Menus) = with(binding) {
             Glide.with(this.root)
                 .load(menu.thumbnail)
                 .into(ivMenu)

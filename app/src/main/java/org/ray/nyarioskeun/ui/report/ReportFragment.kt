@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.model.Image
 import com.google.android.material.snackbar.Snackbar
-import org.ray.core.data.local.entity.AccountEntity
+import org.ray.core.domain.domainModel.Account
 import org.ray.core.utils.DATE_CHECK
 import org.ray.core.utils.IMAGE_PICKER_CHECK
 import org.ray.core.utils.ImageCompressor
@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ReportFragment : Fragment() {
-    private var userAccount: AccountEntity? = null
+    private var userAccount: Account? = null
     private lateinit var binding: FragmentReportBinding
     private var listLocation = listOf(
         "Kantin Asrama Putra",

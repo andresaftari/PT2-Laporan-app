@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import org.ray.core.data.local.entity.AccountEntity
+import org.ray.core.domain.domainModel.Account
 import org.ray.core.utils.ARGUMENTS_CHECK
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             val data = intent.getStringExtra("EXTRA_USERNAME")
             Log.d("$ARGUMENTS_CHECK.username", "$data")
 
-            AccountEntity(username = "$data")
+            Account(username = "$data")
         }
 
         navController = findNavController(R.id.myNavHostFragment)

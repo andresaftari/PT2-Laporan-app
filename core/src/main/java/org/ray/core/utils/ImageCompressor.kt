@@ -14,9 +14,9 @@ object ImageCompressor {
             requireContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             System.currentTimeMillis().toString() + "_image.png"
         )
-        val bos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos)
-        val bitmapdata: ByteArray = bos.toByteArray()
+        val byteArrayStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayStream)
+        val bitmapdata: ByteArray = byteArrayStream.toByteArray()
 
         // Write the bytes in file
         try {
