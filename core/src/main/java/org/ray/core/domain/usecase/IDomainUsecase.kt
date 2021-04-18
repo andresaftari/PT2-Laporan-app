@@ -1,14 +1,14 @@
 package org.ray.core.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import org.ray.core.data.Resource
-import org.ray.core.domain.domainModel.Account
-import org.ray.core.domain.domainModel.Report
+import okhttp3.MultipartBody
+import org.ray.core.data.remote.api.response.ResponseLogin
 
 interface IDomainUsecase {
     // Account
-    fun getAllAccount(): Flow<Resource<List<Account>>>
+    suspend fun postLoginData(
+        username: MultipartBody.Part,
+        password: MultipartBody.Part
+    ): Flow<ResponseLogin>
 
-    // Report
-    fun getAllReport(): Flow<Resource<List<Report>>>
 }

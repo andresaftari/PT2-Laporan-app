@@ -7,3 +7,6 @@ const val API_BASE_URL = "http://nyariosapp.hidroponikdesapanincong.com/"
 const val LOGIN_ENDPOINT = "login.php"
 const val REGISTER_ENDPOINT = "regist.php"
 const val REPORT_ENDPOINT = "report.php"
+
+// TAGS
+const val REMOTE_DATA_CHECK = "Remote_DS"

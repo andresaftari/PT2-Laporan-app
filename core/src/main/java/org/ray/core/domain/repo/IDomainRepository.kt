@@ -1,14 +1,13 @@
 package org.ray.core.domain.repo
 
 import kotlinx.coroutines.flow.Flow
-import org.ray.core.data.Resource
-import org.ray.core.domain.domainModel.Account
-import org.ray.core.domain.domainModel.Report
+import okhttp3.MultipartBody
+import org.ray.core.data.remote.api.response.ResponseLogin
 
 interface IDomainRepository {
     // Account
-    fun getAllAccount(): Flow<Resource<List<Account>>>
-
-    // Report
-    fun getAllReport(): Flow<Resource<List<Report>>>
+    suspend fun postLoginData(
+        username: MultipartBody.Part,
+        password: MultipartBody.Part
+    ): Flow<ResponseLogin>
 }
