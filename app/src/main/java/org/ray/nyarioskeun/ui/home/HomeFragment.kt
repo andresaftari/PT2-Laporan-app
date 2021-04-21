@@ -10,12 +10,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import org.ray.core.domain.domainModel.Account
 import org.ray.core.domain.domainModel.Menus
-import org.ray.core.utils.ARGUMENTS_CHECK
-import org.ray.core.utils.PASSED_DATA_CHECK
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
+import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
+import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -29,12 +29,14 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         // Set username di actionbar title
-        if (activity?.intent!!.hasExtra("EXTRA_USERNAME")) {
+        if (activity?.intent!!.hasExtra("EXTRA_USERNAME") && activity?.intent!!.hasExtra("EXTRA_FULLNAME")) {
             val loginUsername = activity?.intent?.getStringExtra("EXTRA_USERNAME")
+            val fullname = activity?.intent?.getStringExtra("EXTRA_FULLNAME")
             Log.d("$PASSED_DATA_CHECK.username", "$loginUsername")
+            Log.d("$PASSED_DATA_CHECK.fullname", "$fullname")
 
-            (activity as MainActivity).supportActionBar?.title = loginUsername
-            account = Account(fullname = loginUsername)
+            (activity as MainActivity).supportActionBar?.title = fullname
+            account = Account(fullname = fullname, username = loginUsername)
         }
         if (activity?.intent!!.hasExtra("EXTRA_ACCOUNT_RETURN")) {
             val fullname = activity?.intent?.getStringExtra("EXTRA_ACCOUNT_RETURN")

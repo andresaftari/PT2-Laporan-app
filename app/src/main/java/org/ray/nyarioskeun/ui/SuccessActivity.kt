@@ -19,7 +19,7 @@ class SuccessActivity : AppCompatActivity() {
             fullname = intent.getStringExtra("EXTRA_ACCOUNT").toString()
         }
 
-        val background = object : Thread() {
+        object : Thread() {
             override fun run() {
                 sleep(2000)
 
@@ -29,8 +29,8 @@ class SuccessActivity : AppCompatActivity() {
                         MainActivity::class.java
                     ).putExtra("EXTRA_ACCOUNT_RETURN", fullname)
                 )
+                finish()
             }
-        }
-        background.start()
+        }.start()
     }
 }

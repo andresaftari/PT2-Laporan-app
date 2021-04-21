@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import org.ray.core.data.remote.api.ApiConfig
 import org.ray.core.data.remote.api.response.ResponseLogin
-import org.ray.core.utils.LOGIN_CHECK
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.databinding.ActivityLoginBinding
+import org.ray.nyarioskeun.utils.LOGIN_CHECK
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -48,64 +48,69 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.edtLogin.text.toString()
         val pass = binding.edtPass.text.toString()
 
-        with(binding) {
-            when {
-                TextUtils.isEmpty(username) -> {
-                    edtLogin.error = "Silakan isi username terlebih dahulu"
-                    edtLogin.requestFocus()
-                }
-                TextUtils.isEmpty(pass) -> {
-                    edtPass.error = "Silakan isi password terlebih dahulu"
-                    edtPass.requestFocus()
-                }
-                else -> {
-                    val name = MultipartBody.Part.createFormData("username", username)
-                    val password = MultipartBody.Part.createFormData("password", pass)
+        runOnUiThread {
+            with(binding) {
+                when {
+                    TextUtils.isEmpty(username) -> {
+                        edtLogin.error = "Silakan isi username terlebih dahulu"
+                        edtLogin.requestFocus()
+                    }
+                    TextUtils.isEmpty(pass) -> {
+                        edtPass.error = "Silakan isi password terlebih dahulu"
+                        edtPass.requestFocus()
+                    }
+                    else -> GlobalScope.launch {
+                        val name = MultipartBody.Part.createFormData("username", username)
+                        val password = MultipartBody.Part.createFormData("password", pass)
 
-                    postLogin(name, password,
-                        {
-                            if (it.status == "success") {
+                        postLogin(name, password,
+                            {
+                                if (it.status == "success") {
+                                    Snackbar.make(
+                                        binding.btnLogin,
+                                        "Selamat datang, ${it.user}!",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+
+                                    Log.d(
+                                        "$LOGIN_CHECK.InputCheck",
+                                        "$username, $pass, ${it.user}"
+                                    )
+
+                                    object : Thread() {
+                                        override fun run() {
+                                            sleep(1000)
+
+                                            startActivity(
+                                                Intent(
+                                                    this@LoginActivity,
+                                                    MainActivity::class.java
+                                                ).apply {
+                                                    putExtra("EXTRA_FULLNAME", it.user)
+                                                    putExtra("EXTRA_USERNAME", username)
+                                                }
+                                            )
+                                            finish()
+                                        }
+                                    }.start()
+                                } else {
+                                    Log.d("$LOGIN_CHECK.StatusCheck", it.msg)
+                                    Snackbar.make(
+                                        binding.btnLogin,
+                                        "Terjadi kesalahan! ${it.msg}",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
+                            },
+                            {
+                                Log.d("$LOGIN_CHECK.InputCheck", it)
                                 Snackbar.make(
                                     binding.btnLogin,
-                                    "Selamat datang, ${it.user}!",
+                                    "Login gagal! $it",
                                     Snackbar.LENGTH_SHORT
                                 ).show()
-
-                                Log.d(
-                                    "$LOGIN_CHECK.InputCheck",
-                                    "$username, $pass, ${it.user}"
-                                )
-
-                                object : Thread() {
-                                    override fun run() {
-                                        sleep(1000)
-
-                                        startActivity(
-                                            Intent(
-                                                this@LoginActivity,
-                                                MainActivity::class.java
-                                            ).putExtra("EXTRA_USERNAME", it.user)
-                                        )
-                                        finish()
-                                    }
-                                }.start()
-                            } else {
-                                Log.d("$LOGIN_CHECK.InputCheck", "$username, $pass")
-                                Snackbar.make(
-                                    binding.btnLogin,
-                                    "Data user tidak ditemukan!",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                        },
-                        {
-                            Log.d("$LOGIN_CHECK.InputCheck", it)
-                            Snackbar.make(
-                                binding.btnLogin,
-                                "Login gagal! $it",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        })
+                            })
+                    }
                 }
             }
         }
@@ -116,14 +121,12 @@ class LoginActivity : AppCompatActivity() {
         password: MultipartBody.Part,
         onSuccess: (ResponseLogin) -> Unit,
         onFailed: (String) -> Unit
-    ) {
-        try {
-            val response = ApiConfig().service.postLogin(username, password)
+    ) = try {
+        val response = ApiConfig().service.postLogin(username, password)
 
-            if (response.status == "success") onSuccess(response)
-            else onFailed(response.msg)
-        } catch (ex: Exception) {
-            Log.d(LOGIN_CHECK, "postLogin(): ${ex.message.toString()}")
-        }
+        if (response.status == "success") onSuccess(response)
+        else onFailed(response.msg)
+    } catch (ex: Exception) {
+        Log.d(LOGIN_CHECK, "postLogin(): ${ex.message.toString()}")
     }
 }

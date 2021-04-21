@@ -29,5 +29,5 @@ class ApiConfig {
         return retrofit!!.create(serviceClass!!)
     }
 
-    val service: ApiService by lazy { createService(ApiService::class.java) }
+    val service by lazy { createService(ApiService::class.java) }
 }

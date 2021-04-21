@@ -16,14 +16,22 @@ import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.model.Image
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import org.ray.core.data.remote.api.ApiConfig
+import org.ray.core.data.remote.api.response.ResponseReport
 import org.ray.core.domain.domainModel.Account
-import org.ray.core.utils.DATE_CHECK
-import org.ray.core.utils.IMAGE_PICKER_CHECK
 import org.ray.core.utils.ImageCompressor
-import org.ray.core.utils.PASSED_DATA_CHECK
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.databinding.FragmentReportBinding
 import org.ray.nyarioskeun.ui.SuccessActivity
+import org.ray.nyarioskeun.utils.DATE_CHECK
+import org.ray.nyarioskeun.utils.IMAGE_PICKER_CHECK
+import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
+import org.ray.nyarioskeun.utils.REPORT_CHECK
 import java.io.File
 import java.io.IOException
 import java.io.InvalidObjectException
@@ -46,6 +54,7 @@ class ReportFragment : Fragment() {
 
     private var getLocation = ""
     private var getPhoto: File? = null
+    private var photoData: MultipartBody.Part? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +69,7 @@ class ReportFragment : Fragment() {
         with(binding) {
             ivEvidence.setOnClickListener { editEvidencePhoto() }
             tlEvidence.setOnClickListener { editEvidencePhoto() }
-            btnSubmit.setOnClickListener { checkReportData() }
+            btnSubmit.setOnClickListener { GlobalScope.launch { checkReportData() } }
         }
 
         return binding.root
@@ -82,7 +91,11 @@ class ReportFragment : Fragment() {
                 getPhoto = filePhoto
 
                 // Upload ke API menggunakan Multipart
-                // --------------------------------- //
+                photoData = MultipartBody.Part.createFormData(
+                    "photo",
+                    filePhoto.name,
+                    filePhoto.asRequestBody("image/*".toMediaTypeOrNull())
+                )
                 // Upload ke API menggunakan Multipart
 
                 with(binding) {
@@ -114,64 +127,124 @@ class ReportFragment : Fragment() {
     }
 
     // Submit report data
-    private fun setReportData() {
-        binding.pbLoading.visibility = View.VISIBLE
+    private suspend fun setReportData(
+        username: MultipartBody.Part,
+        kerusakan: MultipartBody.Part,
+        lokasi: MultipartBody.Part,
+        deskripsi: MultipartBody.Part,
+        photo: MultipartBody.Part
+    ) {
+        setReport(
+            username,
+            kerusakan,
+            lokasi,
+            deskripsi,
+            photo,
+            {
+                if (it.status == "success") {
+                    Snackbar.make(
+                        binding.root,
+                        "Megirim laporan...",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
 
-        Snackbar.make(
-            binding.root,
-            "Megirim laporan...",
-            Snackbar.LENGTH_SHORT
-        ).show()
+                    object : Thread() {
+                        override fun run() {
+                            sleep(2000)
 
-        val background = object : Thread() {
-            override fun run() {
-                sleep(2000)
-
-                startActivity(
-                    Intent(
-                        requireContext(),
-                        SuccessActivity::class.java
-                    ).putExtra("EXTRA_ACCOUNT", userAccount!!.fullname.toString())
-                )
-                activity?.finish()
+                            startActivity(
+                                Intent(
+                                    requireContext(),
+                                    SuccessActivity::class.java
+                                ).putExtra("EXTRA_ACCOUNT", userAccount!!.fullname.toString())
+                            )
+                            activity?.finish()
+                        }
+                    }.start()
+                } else {
+                    Log.d("$REPORT_CHECK.StatusCheck", it.msg)
+                    Snackbar.make(
+                        binding.btnSubmit,
+                        "Laporan gagal dikirim! ${it.msg}",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            },
+            {
+                Log.d("$REPORT_CHECK.StatusCheck", it)
+                Snackbar.make(
+                    binding.btnSubmit,
+                    "Laporan gagal dikirim! $it",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
-        }
-        background.start()
+        )
     }
 
     // Form sanity check
-    private fun checkReportData() {
+    private suspend fun checkReportData() {
         val reportProblem = binding.edtProblem.text.toString()
         val reportDescription = binding.edtDescription.text.toString()
         val reportLocation = binding.dropdownLocation.text.toString()
 
-        with(binding) {
-            when {
-                TextUtils.isEmpty(reportProblem) -> {
-                    edtProblem.error = "Silakan isi keluhan fasilitas terlebih dahulu"
-                    edtProblem.requestFocus()
+        activity?.runOnUiThread {
+            with(binding) {
+                when {
+                    TextUtils.isEmpty(reportProblem) -> {
+                        edtProblem.error = "Silakan isi keluhan fasilitas terlebih dahulu"
+                        edtProblem.requestFocus()
+                    }
+                    TextUtils.isEmpty(reportLocation) -> {
+                        Snackbar.make(
+                            requireView(),
+                            "Silakan pilih lokasi fasilitas terlebih dahulu",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        dropdownLocation.requestFocus()
+                    }
+                    getPhoto == null -> {
+                        Snackbar.make(
+                            requireView(),
+                            "Silakan isi bukti keluhan fasilitas terlebih dahulu",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        edtEvidence.requestFocus()
+                    }
+                    TextUtils.isEmpty(reportDescription) -> {
+                        edtDescription.error = "Deskripsikan keluhan terlebih dahulu"
+                        edtDescription.requestFocus()
+                    }
+                    else -> {
+                        val usernameData = MultipartBody.Part.createFormData(
+                            "username",
+                            userAccount!!.username.toString()
+                        )
+                        val problemData = MultipartBody.Part.createFormData(
+                            "kerusakan",
+                            reportProblem
+                        )
+                        val locationData = MultipartBody.Part.createFormData(
+                            "lokasi",
+                            reportLocation
+                        )
+                        val descData = MultipartBody.Part.createFormData(
+                            "deskripsi",
+                            reportDescription
+                        )
+                        val photo = photoData!!
+
+                        binding.pbLoading.visibility = View.VISIBLE
+                        GlobalScope.launch {
+                            setReportData(
+                                usernameData,
+                                problemData,
+                                locationData,
+                                descData,
+                                photo
+                            )
+                        }
+                    }
                 }
-                TextUtils.isEmpty(reportLocation) -> {
-                    Snackbar.make(
-                        requireView(),
-                        "Silakan pilih lokasi fasilitas terlebih dahulu",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    dropdownLocation.requestFocus()
-                }
-                getPhoto == null -> {
-                    Snackbar.make(
-                        requireView(),
-                        "Silakan isi bukti keluhan fasilitas terlebih dahulu",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    edtEvidence.requestFocus()
-                }
-                TextUtils.isEmpty(reportDescription) -> {
-                    edtDescription.error = "Deskripsikan keluhan terlebih dahulu"
-                    edtDescription.requestFocus()
-                }
-                else -> setReportData()
             }
         }
     }
@@ -181,7 +254,7 @@ class ReportFragment : Fragment() {
         val userStatus = arguments?.get("status")
         userAccount = arguments?.getParcelable("account")
 
-        Log.d("$PASSED_DATA_CHECK.account", userAccount!!.fullname.toString())
+        Log.d("$PASSED_DATA_CHECK.account", userAccount!!.toString())
         Log.d("$PASSED_DATA_CHECK.status", userStatus.toString())
 
         with(binding) {
@@ -227,12 +300,20 @@ class ReportFragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
+    private suspend fun setReport(
+        username: MultipartBody.Part,
+        kerusakan: MultipartBody.Part,
+        lokasi: MultipartBody.Part,
+        deskripsi: MultipartBody.Part,
+        photo: MultipartBody.Part,
+        onSuccess: (ResponseReport) -> Unit,
+        onFailed: (String) -> Unit
+    ) = try {
+        val response = ApiConfig().service.postReport(username, kerusakan, lokasi, deskripsi, photo)
 
-    companion object {
-        private const val USERNAME_STATE = "USERNAME"
-        private const val STATUS_STATE = "STATUS"
+        if (response.status == "success") onSuccess(response)
+        else onFailed(response.msg)
+    } catch (ex: Exception) {
+        Log.d(REPORT_CHECK, "postReport(): ${ex.message.toString()}")
     }
 }

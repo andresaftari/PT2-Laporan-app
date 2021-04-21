@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import org.ray.core.domain.domainModel.Account
-import org.ray.core.utils.ARGUMENTS_CHECK
+import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
