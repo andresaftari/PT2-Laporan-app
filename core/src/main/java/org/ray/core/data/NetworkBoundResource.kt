@@ -11,18 +11,18 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
     protected abstract suspend fun saveCallResult(data: RequestType)
 
     private var result: Flow<Resource<ResultType>> = flow {
-        emit(Resource.Loading())
+        emit(Resource.loading())
         when (val status = createCall().first()) {
             is ResponseStatus.Success -> {
                 saveCallResult(status.data)
             }
             is ResponseStatus.Error -> {
                 onFetchFailed()
-                emit(Resource.Failed<ResultType>(status.errorMessage))
+                emit(Resource.error<ResultType>(status.errorMessage))
             }
             is ResponseStatus.Empty -> {
                 onFetchFailed()
-                emit(Resource.Failed<ResultType>("No data!"))
+                emit(Resource.error<ResultType>("No data!"))
             }
         }
     }

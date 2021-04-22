@@ -3,6 +3,7 @@ package org.ray.core.injections
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import org.ray.core.data.DataRepository
 import org.ray.core.data.remote.RemoteDataSource
 import org.ray.core.data.remote.api.endpoint.ApiService
 import org.ray.core.utils.CoreExecutor
@@ -31,7 +32,11 @@ val remoteModule = module {
     }
 }
 
-val repoModule = module {
+val sourceModule = module {
     single { RemoteDataSource(get()) }
+}
+
+val repoModule = module {
     factory { CoreExecutor() }
+    single { DataRepository(get()) }
 }

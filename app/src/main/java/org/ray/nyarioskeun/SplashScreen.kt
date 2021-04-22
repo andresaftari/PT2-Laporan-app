@@ -1,5 +1,6 @@
 package org.ray.nyarioskeun
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import org.ray.nyarioskeun.databinding.SplashScreenBinding
 import org.ray.nyarioskeun.ui.WelcomeActivity
 import org.ray.nyarioskeun.utils.SPLASH_SCREEN_TAG
 
+@SuppressLint("LogNotTimber")
 class SplashScreen : AppCompatActivity() {
     private lateinit var binding: SplashScreenBinding
 

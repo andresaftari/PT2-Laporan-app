@@ -1,5 +1,6 @@
 package org.ray.nyarioskeun.ui.auth
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -15,6 +16,7 @@ import org.ray.core.data.remote.api.response.ResponseRegister
 import org.ray.nyarioskeun.databinding.ActivityRegisterBinding
 import org.ray.nyarioskeun.utils.REGISTER_CHECK
 
+@SuppressLint("LogNotTimber")
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
 

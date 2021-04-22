@@ -1,5 +1,6 @@
 package org.ray.nyarioskeun
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.navigation.ui.NavigationUI
 import org.ray.core.domain.domainModel.Account
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 
+@SuppressLint("LogNotTimber")
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 

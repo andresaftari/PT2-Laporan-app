@@ -1,5 +1,6 @@
 package org.ray.nyarioskeun.ui.report
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -38,6 +39,7 @@ import java.io.InvalidObjectException
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("LogNotTimber")
 class ReportFragment : Fragment() {
     private var userAccount: Account? = null
     private lateinit var binding: FragmentReportBinding

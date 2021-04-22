@@ -1,5 +1,6 @@
 package org.ray.nyarioskeun.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
 import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 
+@SuppressLint("LogNotTimber")
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var menuAdapter: MenuAdapter
