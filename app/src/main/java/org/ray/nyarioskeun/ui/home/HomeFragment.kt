@@ -22,6 +22,7 @@ import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var menuAdapter: MenuAdapter
+
     private var account = Account()
 
     override fun onCreateView(
@@ -31,7 +32,9 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         // Set username di actionbar title
-        if (activity?.intent!!.hasExtra("EXTRA_USERNAME") && activity?.intent!!.hasExtra("EXTRA_FULLNAME")) {
+        if (activity?.intent!!.hasExtra("EXTRA_USERNAME") &&
+            activity?.intent!!.hasExtra("EXTRA_FULLNAME")
+        ) {
             val loginUsername = activity?.intent?.getStringExtra("EXTRA_USERNAME")
             val fullname = activity?.intent?.getStringExtra("EXTRA_FULLNAME")
             Log.d("$PASSED_DATA_CHECK.username", "$loginUsername")

@@ -23,9 +23,9 @@ class MApplication : Application() {
                 listOf(
                     remoteModule,
                     sourceModule,
-                    repoModule,
                     useCaseModule,
-                    viewModel
+                    viewModel,
+                    repoModule
                 )
             )
         }

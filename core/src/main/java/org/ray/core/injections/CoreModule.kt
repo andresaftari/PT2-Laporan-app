@@ -6,6 +6,8 @@ import org.koin.dsl.module
 import org.ray.core.data.DataRepository
 import org.ray.core.data.remote.RemoteDataSource
 import org.ray.core.data.remote.api.endpoint.ApiService
+import org.ray.core.domain.repo.IDomainRepository
+import org.ray.core.utils.API_BASE_URL
 import org.ray.core.utils.CoreExecutor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,7 +25,7 @@ val remoteModule = module {
 
     single {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.themealdb.com/api/json/v1/1/")
+            .baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -38,5 +40,5 @@ val sourceModule = module {
 
 val repoModule = module {
     factory { CoreExecutor() }
-    single { DataRepository(get()) }
+    single<IDomainRepository> { DataRepository(get()) }
 }

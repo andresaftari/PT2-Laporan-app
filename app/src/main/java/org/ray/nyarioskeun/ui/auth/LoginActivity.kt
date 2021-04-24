@@ -7,12 +7,8 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.ray.core.data.remote.api.ApiConfig
-import org.ray.core.data.remote.api.response.ResponseLogin
 import org.ray.core.utils.Status
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.databinding.ActivityLoginBinding
@@ -44,8 +40,7 @@ class LoginActivity : AppCompatActivity() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
-//            btnLogin.setOnClickListener { startLogin() }
-            btnLogin.setOnClickListener { GlobalScope.launch { setLogin() } }
+            btnLogin.setOnClickListener { startLogin() }
         }
     }
 
@@ -53,165 +48,76 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.edtLogin.text.toString()
         val pass = binding.edtPass.text.toString()
 
-        with(binding) {
-            when {
-                TextUtils.isEmpty(username) -> {
+        when {
+            TextUtils.isEmpty(username) -> {
+                with(binding) {
                     edtLogin.error = "Silakan isi username terlebih dahulu"
                     edtLogin.requestFocus()
                 }
-                TextUtils.isEmpty(pass) -> {
+            }
+            TextUtils.isEmpty(pass) -> {
+                with(binding) {
                     edtPass.error = "Silakan isi password terlebih dahulu"
                     edtPass.requestFocus()
                 }
-                else -> {
-                    val name = MultipartBody.Part.createFormData("username", username)
-                    val password = MultipartBody.Part.createFormData("password", pass)
+            }
+            else -> {
+                val name = MultipartBody.Part.createFormData("username", username)
+                val password = MultipartBody.Part.createFormData("password", pass)
 
-                    viewModel.setLogin(name, password).observe(this@LoginActivity, {
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                it.data?.let { response ->
-                                    if (response.status == "success") {
-                                        Snackbar.make(
-                                            binding.btnLogin,
-                                            "Selamat datang, ${response.user}!",
-                                            Snackbar.LENGTH_SHORT
-                                        ).show()
-
-                                        Log.d(
-                                            "$LOGIN_CHECK.InputCheck",
-                                            "$username, $pass, ${response.user}"
-                                        )
-
-                                        object : Thread() {
-                                            override fun run() {
-                                                sleep(1000)
-
-                                                startActivity(
-                                                    Intent(
-                                                        this@LoginActivity,
-                                                        MainActivity::class.java
-                                                    ).apply {
-                                                        putExtra("EXTRA_FULLNAME", response.user)
-                                                        putExtra("EXTRA_USERNAME", username)
-                                                    }
-                                                )
-                                                finish()
-                                            }
-                                        }.start()
-                                    } else {
-                                        Log.d("$LOGIN_CHECK.StatusCheck", response.msg)
-                                        Snackbar.make(
-                                            btnLogin,
-                                            "Terjadi kesalahan! ${response.msg}",
-                                            Snackbar.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-                            }
-                            Status.LOADING -> Snackbar.make(
-                                btnLogin,
-                                "Mohon menunggu",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                            Status.ERROR -> {
+                viewModel.setLogin(name, password).observe(this, {
+                    when (it.status) {
+                        Status.SUCCESS -> it.data?.let { response ->
+                            if (response.status == "success") {
                                 Snackbar.make(
-                                    btnLogin,
-                                    "Login gagal! ${it.data?.msg}",
+                                    binding.root,
+                                    "Selamat datang, ${response.user}!",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+
+                                Log.d(
+                                    "$LOGIN_CHECK.InputCheck",
+                                    "$username, $pass, ${response.user}"
+                                )
+
+                                object : Thread() {
+                                    override fun run() {
+                                        sleep(1000)
+
+                                        startActivity(
+                                            Intent(
+                                                this@LoginActivity,
+                                                MainActivity::class.java
+                                            ).apply {
+                                                putExtra("EXTRA_FULLNAME", response.user)
+                                                putExtra("EXTRA_USERNAME", username)
+                                            }
+                                        )
+                                        finish()
+                                    }
+                                }.start()
+                            } else {
+                                Log.d("$LOGIN_CHECK.StatusCheck", response.msg)
+                                Snackbar.make(
+                                    binding.root,
+                                    "Terjadi kesalahan! ${response.msg}",
                                     Snackbar.LENGTH_SHORT
                                 ).show()
                             }
                         }
-                    })
-                }
+                        Status.LOADING -> Snackbar.make(
+                            binding.root,
+                            "Mohon menunggu",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        Status.ERROR -> Snackbar.make(
+                            binding.root,
+                            "Login gagal! ${it.message}",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                })
             }
         }
-    }
-
-    // Start login
-    private suspend fun setLogin() {
-        val username = binding.edtLogin.text.toString()
-        val pass = binding.edtPass.text.toString()
-
-        runOnUiThread {
-            with(binding) {
-                when {
-                    TextUtils.isEmpty(username) -> {
-                        edtLogin.error = "Silakan isi username terlebih dahulu"
-                        edtLogin.requestFocus()
-                    }
-                    TextUtils.isEmpty(pass) -> {
-                        edtPass.error = "Silakan isi password terlebih dahulu"
-                        edtPass.requestFocus()
-                    }
-                    else -> GlobalScope.launch {
-                        val name = MultipartBody.Part.createFormData("username", username)
-                        val password = MultipartBody.Part.createFormData("password", pass)
-
-                        postLogin(name, password,
-                            {
-                                if (it.status == "success") {
-                                    Snackbar.make(
-                                        binding.btnLogin,
-                                        "Selamat datang, ${it.user}!",
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-
-                                    Log.d(
-                                        "$LOGIN_CHECK.InputCheck",
-                                        "$username, $pass, ${it.user}"
-                                    )
-
-                                    object : Thread() {
-                                        override fun run() {
-                                            sleep(1000)
-
-                                            startActivity(
-                                                Intent(
-                                                    this@LoginActivity,
-                                                    MainActivity::class.java
-                                                ).apply {
-                                                    putExtra("EXTRA_FULLNAME", it.user)
-                                                    putExtra("EXTRA_USERNAME", username)
-                                                }
-                                            )
-                                            finish()
-                                        }
-                                    }.start()
-                                } else {
-                                    Log.d("$LOGIN_CHECK.StatusCheck", it.msg)
-                                    Snackbar.make(
-                                        binding.btnLogin,
-                                        "Terjadi kesalahan! ${it.msg}",
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-                                }
-                            },
-                            {
-                                Log.d("$LOGIN_CHECK.InputCheck", it)
-                                Snackbar.make(
-                                    binding.btnLogin,
-                                    "Login gagal! $it",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            })
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun postLogin(
-        username: MultipartBody.Part,
-        password: MultipartBody.Part,
-        onSuccess: (ResponseLogin) -> Unit,
-        onFailed: (String) -> Unit
-    ) = try {
-        val response = ApiConfig().service.postLogin(username, password)
-
-        if (response.status == "success") onSuccess(response)
-        else onFailed(response.msg)
-    } catch (ex: Exception) {
-        Log.d(LOGIN_CHECK, "postLogin(): ${ex.message.toString()}")
     }
 }
