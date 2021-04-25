@@ -1,4 +1,4 @@
-package org.ray.core.domain.domainModel
+package org.ray.core.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

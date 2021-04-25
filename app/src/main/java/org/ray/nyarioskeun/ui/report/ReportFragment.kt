@@ -23,7 +23,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.ray.core.domain.domainModel.Account
+import org.ray.core.domain.model.Account
 import org.ray.core.utils.ImageCompressor
 import org.ray.core.utils.Status
 import org.ray.nyarioskeun.R

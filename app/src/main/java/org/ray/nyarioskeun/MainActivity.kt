@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import org.ray.core.domain.domainModel.Account
+import org.ray.core.domain.model.Account
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 
 @SuppressLint("LogNotTimber")

@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import org.ray.core.domain.domainModel.Account
-import org.ray.core.domain.domainModel.Menus
+import org.ray.core.domain.model.Account
+import org.ray.core.domain.model.Menus
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding

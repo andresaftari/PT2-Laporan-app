@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.ray.core.domain.domainModel.Menus
+import org.ray.core.domain.model.Menus
 import org.ray.nyarioskeun.databinding.ItemMenuBinding
 
 class MenuAdapter(
