@@ -8,6 +8,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
+// Used to compress image uploaded to the API
 object ImageCompressor {
     fun addTempFile(requireContext: Context, bitmap: Bitmap): File {
         val file = File(

@@ -12,6 +12,7 @@ import org.ray.nyarioskeun.utils.useCaseModule
 import org.ray.nyarioskeun.utils.viewModel
 import timber.log.Timber
 
+// Start Koin dependency injection
 class MApplication : Application() {
     override fun onCreate() {
         super.onCreate()

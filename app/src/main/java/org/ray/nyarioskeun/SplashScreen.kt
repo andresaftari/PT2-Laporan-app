@@ -18,20 +18,16 @@ class SplashScreen : AppCompatActivity() {
         binding = SplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val background = object : Thread() {
+        object : Thread() {
             override fun run() {
                 try {
                     sleep(3000)
                     startActivity(Intent(baseContext, WelcomeActivity::class.java))
                     finish()
                 } catch (e: Exception) {
-                    Log.i(
-                        "$SPLASH_SCREEN_TAG.Process",
-                        "Failed! ${e.localizedMessage}"
-                    )
+                    Log.i("$SPLASH_SCREEN_TAG.Process", "Failed! ${e.localizedMessage}")
                 }
             }
-        }
-        background.start()
+        }.start()
     }
 }

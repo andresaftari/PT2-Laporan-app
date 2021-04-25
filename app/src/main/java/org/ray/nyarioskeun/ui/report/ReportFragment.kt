@@ -188,7 +188,6 @@ class ReportFragment : Fragment() {
         val reportDescription = binding.edtDescription.text.toString()
         val reportLocation = binding.dropdownLocation.text.toString()
 
-
         with(binding) {
             when {
                 TextUtils.isEmpty(reportProblem) -> {
@@ -241,7 +240,7 @@ class ReportFragment : Fragment() {
         }
     }
 
-    // Get user fullname and status
+    // Setup user fullname and status
     private fun setUserData() {
         val userStatus = arguments?.get("status")
         userAccount = arguments?.getParcelable("account")
@@ -285,6 +284,7 @@ class ReportFragment : Fragment() {
                     before: Int,
                     count: Int
                 ) {
+                    // Nothing
                 }
 
                 override fun afterTextChanged(text: Editable?) {}

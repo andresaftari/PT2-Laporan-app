@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-        // Set username di actionbar title
+        // Set fullname on actionbar title (From login page)
         if (activity?.intent!!.hasExtra("EXTRA_USERNAME") &&
             activity?.intent!!.hasExtra("EXTRA_FULLNAME")
         ) {
@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
             (activity as MainActivity).supportActionBar?.title = fullname
             account = Account(fullname = fullname, username = loginUsername)
         }
+
+        // Set fullname on actionbar title (From report page)
         if (activity?.intent!!.hasExtra("EXTRA_ACCOUNT_RETURN")) {
             val fullname = activity?.intent?.getStringExtra("EXTRA_ACCOUNT_RETURN")
             Log.d("$PASSED_DATA_CHECK.fullname", "$fullname")

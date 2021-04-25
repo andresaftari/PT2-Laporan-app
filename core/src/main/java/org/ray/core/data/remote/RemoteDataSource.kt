@@ -12,6 +12,7 @@ import org.ray.core.utils.REMOTE_DATA_CHECK
 
 @SuppressLint("LogNotTimber")
 class RemoteDataSource(private val apiService: ApiService) {
+    // Setup login source flow
     fun postLoginData(username: MultipartBody.Part, password: MultipartBody.Part) = flow {
         try {
             val response = apiService.postLogin(username, password)
@@ -37,6 +38,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }
     }.flowOn(Dispatchers.IO)
 
+    // Setup register source flow
     fun postRegisterData(
         username: MultipartBody.Part,
         password: MultipartBody.Part,
@@ -67,6 +69,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }
     }.flowOn(Dispatchers.IO)
 
+    // Setup report source flow
     fun postReportData(
         username: MultipartBody.Part,
         damage: MultipartBody.Part,

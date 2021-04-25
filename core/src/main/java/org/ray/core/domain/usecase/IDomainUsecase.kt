@@ -8,12 +8,13 @@ import org.ray.core.data.remote.api.response.ResponseRegister
 import org.ray.core.data.remote.api.response.ResponseReport
 
 interface IDomainUsecase {
-    // Account
+    // Login
     fun postLoginData(
         username: MultipartBody.Part,
         password: MultipartBody.Part
     ): Flow<Resource<ResponseLogin>>
 
+    // Register
     fun postRegisterData(
         username: MultipartBody.Part,
         password: MultipartBody.Part,

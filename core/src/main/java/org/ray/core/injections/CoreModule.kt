@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+// Setup API remote dependency injection
 val remoteModule = module {
     single {
         OkHttpClient.Builder()
@@ -34,10 +35,12 @@ val remoteModule = module {
     }
 }
 
+// Setup data source dependency injection
 val sourceModule = module {
     single { RemoteDataSource(get()) }
 }
 
+// Setup data repository dependency injection
 val repoModule = module {
     factory { CoreExecutor() }
     single<IDomainRepository> { DataRepository(get()) }

@@ -17,19 +17,11 @@ class WelcomeActivity : AppCompatActivity() {
 
         with(binding) {
             btnLogin.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@WelcomeActivity,
-                        LoginActivity::class.java
-                    )
-                )
+                startActivity(Intent(this@WelcomeActivity, LoginActivity::class.java))
             }
             btnRegister.setOnClickListener {
                 startActivity(
-                    Intent(
-                        this@WelcomeActivity,
-                        RegisterActivity::class.java
-                    )
+                    Intent(this@WelcomeActivity, RegisterActivity::class.java)
                 )
             }
         }
