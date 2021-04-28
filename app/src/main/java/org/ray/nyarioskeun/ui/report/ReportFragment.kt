@@ -17,8 +17,6 @@ import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.model.Image
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -72,7 +70,7 @@ class ReportFragment : Fragment() {
         with(binding) {
             ivEvidence.setOnClickListener { editEvidencePhoto() }
             tlEvidence.setOnClickListener { editEvidencePhoto() }
-            btnSubmit.setOnClickListener { GlobalScope.launch { checkReportData() } }
+            btnSubmit.setOnClickListener { checkReportData() }
         }
 
         return binding.root
@@ -232,8 +230,6 @@ class ReportFragment : Fragment() {
                         reportDescription
                     )
                     val photo = photoData!!
-
-                    pbLoading.visibility = View.VISIBLE
                     postReportData(usernameData, problemData, locationData, descData, photo)
                 }
             }

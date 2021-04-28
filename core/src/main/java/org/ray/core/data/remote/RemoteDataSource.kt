@@ -99,5 +99,5 @@ class RemoteDataSource(private val apiService: ApiService) {
             )
             emit(ResponseStatus.Error(ex.message.toString()))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }
