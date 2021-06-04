@@ -40,11 +40,12 @@ class LoginActivity : AppCompatActivity() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
-            btnLogin.setOnClickListener { startLogin() }
+            btnLogin.setOnClickListener { checkLogin() }
         }
     }
 
-    private fun startLogin() {
+    // Login Input Check
+    private fun checkLogin() {
         val username = binding.edtLogin.text.toString()
         val pass = binding.edtPass.text.toString()
 
@@ -61,63 +62,66 @@ class LoginActivity : AppCompatActivity() {
                     edtPass.requestFocus()
                 }
             }
-            else -> {
-                val name = MultipartBody.Part.createFormData("username", username)
-                val password = MultipartBody.Part.createFormData("password", pass)
+            else -> startLogin(username, pass)
+        }
+    }
 
-                viewModel.setLogin(name, password).observe(this, {
-                    when (it.status) {
-                        Status.SUCCESS -> it.data?.let { response ->
-                            if (response.status == "success") {
-                                Snackbar.make(
-                                    binding.root,
-                                    "Selamat datang, ${response.user}!",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
+    // Start Login
+    private fun startLogin(username: String, pass: String) {
+        val name = MultipartBody.Part.createFormData("username", username)
+        val password = MultipartBody.Part.createFormData("password", pass)
 
-                                Log.d(
-                                    "$LOGIN_CHECK.InputCheck",
-                                    "$username, $pass, ${response.user}"
-                                )
-
-                                object : Thread() {
-                                    override fun run() {
-                                        sleep(1000)
-
-                                        startActivity(
-                                            Intent(
-                                                this@LoginActivity,
-                                                MainActivity::class.java
-                                            ).apply {
-                                                putExtra("EXTRA_FULLNAME", response.user)
-                                                putExtra("EXTRA_USERNAME", username)
-                                            }
-                                        )
-                                        finish()
-                                    }
-                                }.start()
-                            } else {
-                                Log.d("$LOGIN_CHECK.StatusCheck", response.msg)
-                                Snackbar.make(
-                                    binding.root,
-                                    "Terjadi kesalahan! ${response.msg}",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                        Status.LOADING -> Snackbar.make(
+        viewModel.setLogin(name, password).observe(this, {
+            when (it.status) {
+                Status.SUCCESS -> it.data?.let { response ->
+                    if (response.status == "success") {
+                        Snackbar.make(
                             binding.root,
-                            "Mohon menunggu",
+                            "Selamat datang, ${response.user}!",
                             Snackbar.LENGTH_SHORT
                         ).show()
-                        Status.ERROR -> Snackbar.make(
+
+                        Log.d(
+                            "$LOGIN_CHECK.InputCheck",
+                            "$username, $pass, ${response.user}"
+                        )
+
+                        object : Thread() {
+                            override fun run() {
+                                sleep(1000)
+
+                                startActivity(
+                                    Intent(
+                                        this@LoginActivity,
+                                        MainActivity::class.java
+                                    ).apply {
+                                        putExtra("EXTRA_FULLNAME", response.user)
+                                        putExtra("EXTRA_USERNAME", username)
+                                    }
+                                )
+                                finish()
+                            }
+                        }.start()
+                    } else {
+                        Log.d("$LOGIN_CHECK.StatusCheck", response.msg)
+                        Snackbar.make(
                             binding.root,
-                            "Login gagal! ${it.message}",
+                            "Terjadi kesalahan! ${response.msg}",
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                })
+                }
+                Status.LOADING -> Snackbar.make(
+                    binding.root,
+                    "Mohon menunggu",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Status.ERROR -> Snackbar.make(
+                    binding.root,
+                    "Login gagal! ${it.message}",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
-        }
+        })
     }
 }

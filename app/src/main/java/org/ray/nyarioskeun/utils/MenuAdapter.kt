@@ -10,9 +10,7 @@ import org.ray.nyarioskeun.databinding.ItemMenuBinding
 class MenuAdapter(
     private var items: ArrayList<Menus>,
     var handler: (Int, Menus) -> Unit
-) :
-    RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
-
+) : RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

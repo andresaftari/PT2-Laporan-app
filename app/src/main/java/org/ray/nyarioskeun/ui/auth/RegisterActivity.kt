@@ -25,7 +25,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            btnRegister.setOnClickListener { startRegister() }
+            btnRegister.setOnClickListener { checkRegister() }
             tvToLogin.setOnClickListener {
                 startActivity(
                     Intent(
@@ -37,7 +37,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun startRegister() {
+    // Login Input Check
+    private fun checkRegister() {
         val fullname = binding.edtName.text.toString()
         val username = binding.edtUsername.text.toString()
         val pass = binding.edtPassword.text.toString()
@@ -100,66 +101,75 @@ class RegisterActivity : AppCompatActivity() {
                     edtConfirmPass.requestFocus()
                 }
             }
-            else -> {
-                val nameData = MultipartBody.Part.createFormData("nama", fullname)
-                val passwordData = MultipartBody.Part.createFormData("password", pass)
-                val emailData = MultipartBody.Part.createFormData("email", email)
-                val usernameData = MultipartBody.Part.createFormData("username", username)
+            else -> startRegister(fullname, username, pass, confirm, email)
+        }
+    }
 
-                viewModel.setRegister(
-                    nameData,
-                    usernameData,
-                    passwordData,
-                    emailData
-                ).observe(this, {
-                    when (it.status) {
-                        Status.SUCCESS -> it.data?.let { response ->
-                            if (response.status == "success") {
-                                Snackbar.make(
-                                    binding.root,
-                                    "Registrasi berhasil! Silakan login dengan akunmu!",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
+    // Start Login
+    private fun startRegister(
+        fullname: String,
+        username: String,
+        pass: String,
+        confirm: String,
+        email: String
+    ) {
+        val nameData = MultipartBody.Part.createFormData("nama", fullname)
+        val passwordData = MultipartBody.Part.createFormData("password", pass)
+        val emailData = MultipartBody.Part.createFormData("email", email)
+        val usernameData = MultipartBody.Part.createFormData("username", username)
 
-                                Log.d(
-                                    "$REGISTER_CHECK.InputCheck",
-                                    "$fullname, $username, $pass, $confirm"
-                                )
-
-                                object : Thread() {
-                                    override fun run() {
-                                        sleep(1000)
-
-                                        startActivity(
-                                            Intent(
-                                                this@RegisterActivity,
-                                                LoginActivity::class.java
-                                            )
-                                        )
-                                    }
-                                }.start()
-                            } else {
-                                Log.d("$REGISTER_CHECK.StatusCheck", response.msg)
-                                Snackbar.make(
-                                    binding.root,
-                                    "Terjadi kesalahan! ${response.msg}",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                        Status.LOADING -> Snackbar.make(
+        viewModel.setRegister(
+            nameData,
+            usernameData,
+            passwordData,
+            emailData
+        ).observe(this, {
+            when (it.status) {
+                Status.SUCCESS -> it.data?.let { response ->
+                    if (response.status == "success") {
+                        Snackbar.make(
                             binding.root,
-                            "Mohon menunggu",
+                            "Registrasi berhasil! Silakan login dengan akunmu!",
                             Snackbar.LENGTH_SHORT
                         ).show()
-                        Status.ERROR -> Snackbar.make(
+
+                        Log.d(
+                            "$REGISTER_CHECK.InputCheck",
+                            "$fullname, $username, $pass, $confirm"
+                        )
+
+                        object : Thread() {
+                            override fun run() {
+                                sleep(1000)
+
+                                startActivity(
+                                    Intent(
+                                        this@RegisterActivity,
+                                        LoginActivity::class.java
+                                    )
+                                )
+                            }
+                        }.start()
+                    } else {
+                        Log.d("$REGISTER_CHECK.StatusCheck", response.msg)
+                        Snackbar.make(
                             binding.root,
-                            "Gagal mendaftar! ${it.message}",
+                            "Terjadi kesalahan! ${response.msg}",
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                })
+                }
+                Status.LOADING -> Snackbar.make(
+                    binding.root,
+                    "Mohon menunggu",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Status.ERROR -> Snackbar.make(
+                    binding.root,
+                    "Gagal mendaftar! ${it.message}",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
-        }
+        })
     }
 }

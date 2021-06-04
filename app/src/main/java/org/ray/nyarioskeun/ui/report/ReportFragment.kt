@@ -89,6 +89,7 @@ class ReportFragment : Fragment() {
                 val fileDescriptor = parcelFileDescriptor.fileDescriptor
                 val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
                 val filePhoto = ImageCompressor.addTempFile(requireContext(), image)
+
                 getPhoto = filePhoto
 
                 // Upload ke API menggunakan Multipart
@@ -253,9 +254,7 @@ class ReportFragment : Fragment() {
     // Load dropdown untuk pilihan location
     private fun loadDropDownLocation() {
         val arrAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.item_list_dropdown_text,
-            listLocation
+            requireContext(), R.layout.item_list_dropdown_text, listLocation
         )
 
         with(binding.dropdownLocation) {
@@ -280,7 +279,6 @@ class ReportFragment : Fragment() {
                     before: Int,
                     count: Int
                 ) {
-                    // Nothing
                 }
 
                 override fun afterTextChanged(text: Editable?) {}

@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
         ) {
             val loginUsername = activity?.intent?.getStringExtra("EXTRA_USERNAME")
             val fullname = activity?.intent?.getStringExtra("EXTRA_FULLNAME")
+
             Log.d("$PASSED_DATA_CHECK.username", "$loginUsername")
             Log.d("$PASSED_DATA_CHECK.fullname", "$fullname")
 
@@ -47,6 +48,7 @@ class HomeFragment : Fragment() {
         // Set fullname on actionbar title (From report page)
         if (activity?.intent!!.hasExtra("EXTRA_ACCOUNT_RETURN")) {
             val fullname = activity?.intent?.getStringExtra("EXTRA_ACCOUNT_RETURN")
+
             Log.d("$PASSED_DATA_CHECK.fullname", "$fullname")
 
             (activity as MainActivity).supportActionBar?.title = fullname
@@ -82,43 +84,37 @@ class HomeFragment : Fragment() {
                 0 -> {
                     Log.d("$ARGUMENTS_CHECK.dosen", "${bundleStatus.get("status")}")
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_reportFragment,
-                        bundleStatus
+                        R.id.action_homeFragment_to_reportFragment, bundleStatus
                     )
                 }
                 1 -> {
                     Log.d("$ARGUMENTS_CHECK.mahasiswa", "${bundleStatus.get("status")}")
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_reportFragment,
-                        bundleStatus
+                        R.id.action_homeFragment_to_reportFragment, bundleStatus
                     )
                 }
                 2 -> {
                     Log.d("$ARGUMENTS_CHECK.karyawan", "${bundleStatus.get("status")}")
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_reportFragment,
-                        bundleStatus
+                        R.id.action_homeFragment_to_reportFragment, bundleStatus
                     )
                 }
                 3 -> {
                     Log.d("$ARGUMENTS_CHECK.kantin", "${bundleStatus.get("status")}")
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_reportFragment,
-                        bundleStatus
+                        R.id.action_homeFragment_to_reportFragment, bundleStatus
                     )
                 }
                 4 -> {
                     Log.d("$ARGUMENTS_CHECK.tmart", "${bundleStatus.get("status")}")
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_reportFragment,
-                        bundleStatus
+                        R.id.action_homeFragment_to_reportFragment, bundleStatus
                     )
                 }
                 5 -> {
                     Log.d("$ARGUMENTS_CHECK.ot", "${bundleStatus.get("status")}")
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_reportFragment,
-                        bundleStatus
+                        R.id.action_homeFragment_to_reportFragment, bundleStatus
                     )
                 }
             }
