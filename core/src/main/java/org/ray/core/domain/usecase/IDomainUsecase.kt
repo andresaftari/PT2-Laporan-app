@@ -3,6 +3,7 @@ package org.ray.core.domain.usecase
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import org.ray.core.data.Resource
+import org.ray.core.data.remote.api.response.ResponseHistory
 import org.ray.core.data.remote.api.response.ResponseLogin
 import org.ray.core.data.remote.api.response.ResponseRegister
 import org.ray.core.data.remote.api.response.ResponseReport
@@ -30,4 +31,7 @@ interface IDomainUsecase {
         description: MultipartBody.Part,
         photo: MultipartBody.Part
     ): Flow<Resource<ResponseReport>>
+
+    // History
+    fun getHistoryData(): Flow<Resource<ArrayList<ResponseHistory>>>
 }

@@ -33,13 +33,13 @@ class LoginActivity : AppCompatActivity() {
                     )
                 )
             }
-            btnIgracias.setOnClickListener {
-                Snackbar.make(
-                    btnIgracias,
-                    "Sabar yaaaa beb, masih dalam pengembangan",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
+//            btnIgracias.setOnClickListener {
+//                Snackbar.make(
+//                    btnIgracias,
+//                    "Sabar yaaaa beb, masih dalam pengembangan",
+//                    Snackbar.LENGTH_SHORT
+//                ).show()
+//            }
             btnLogin.setOnClickListener { checkLogin() }
         }
     }
@@ -77,13 +77,13 @@ class LoginActivity : AppCompatActivity() {
                     if (response.status == "success") {
                         Snackbar.make(
                             binding.root,
-                            "Selamat datang, ${response.user}!",
+                            "Selamat datang, ${response.name}!",
                             Snackbar.LENGTH_SHORT
                         ).show()
 
                         Log.d(
                             "$LOGIN_CHECK.InputCheck",
-                            "$username, $pass, ${response.user}"
+                            "$username, $pass, ${response.name}"
                         )
 
                         object : Thread() {
@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                                         this@LoginActivity,
                                         MainActivity::class.java
                                     ).apply {
-                                        putExtra("EXTRA_FULLNAME", response.user)
+                                        putExtra("EXTRA_FULLNAME", response.name)
                                         putExtra("EXTRA_USERNAME", username)
                                     }
                                 )

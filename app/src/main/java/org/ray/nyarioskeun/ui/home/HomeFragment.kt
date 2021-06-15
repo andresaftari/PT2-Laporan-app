@@ -1,11 +1,10 @@
 package org.ray.nyarioskeun.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +13,7 @@ import org.ray.core.domain.model.Menus
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
+import org.ray.nyarioskeun.ui.history.HistoryActivity
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
 import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
@@ -30,6 +30,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        setHasOptionsMenu(true)
 
         // Set fullname on actionbar title (From login page)
         if (activity?.intent!!.hasExtra("EXTRA_USERNAME") &&
@@ -57,6 +58,28 @@ class HomeFragment : Fragment() {
 
         getMenu()
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_history, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_history -> {
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        HistoryActivity::class.java
+                    )
+                )
+
+                return true
+            }
+        }
+
+        return false
     }
 
     // Load main menu

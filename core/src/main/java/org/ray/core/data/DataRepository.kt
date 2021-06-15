@@ -5,15 +5,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import org.ray.core.data.remote.RemoteDataSource
-import org.ray.core.data.remote.api.response.ResponseLogin
-import org.ray.core.data.remote.api.response.ResponseRegister
-import org.ray.core.data.remote.api.response.ResponseReport
-import org.ray.core.data.remote.api.response.ResponseStatus
+import org.ray.core.data.remote.api.response.*
 import org.ray.core.domain.repo.IDomainRepository
 
 class DataRepository(
     private val remote: RemoteDataSource,
 ) : IDomainRepository {
+
+    // LOGIN
     override fun postLoginData(
         username: MultipartBody.Part,
         password: MultipartBody.Part
@@ -28,6 +27,7 @@ class DataRepository(
         }
     }
 
+    // REGISTER
     override fun postRegisterData(
         username: MultipartBody.Part,
         password: MultipartBody.Part,
@@ -44,6 +44,7 @@ class DataRepository(
         }
     }
 
+    // REPORT
     override fun postReportData(
         username: MultipartBody.Part,
         damage: MultipartBody.Part,
@@ -58,6 +59,18 @@ class DataRepository(
             is ResponseStatus.Success -> emit(Resource.success(apiResponse.data))
             is ResponseStatus.Empty -> emit(Resource.success(ResponseReport()))
             is ResponseStatus.Error -> emit(Resource.error<ResponseReport>(apiResponse.errorMessage))
+        }
+    }
+
+    // HISTORY
+    override fun getHistoryData(): Flow<Resource<ArrayList<ResponseHistory>>> = flow {
+        emit(Resource.loading())
+        val response = remote.getHistoryData()
+
+        when (val apiResponse = response.first()) {
+            is ResponseStatus.Success -> emit(Resource.success(apiResponse.data))
+            is ResponseStatus.Empty -> emit(Resource.success(arrayListOf<ResponseHistory>()))
+            is ResponseStatus.Error -> emit(Resource.error<ArrayList<ResponseHistory>>(apiResponse.errorMessage))
         }
     }
 }

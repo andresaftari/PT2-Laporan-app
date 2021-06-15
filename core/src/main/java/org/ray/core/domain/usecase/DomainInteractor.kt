@@ -26,4 +26,6 @@ class DomainInteractor(private val iDomainRepository: IDomainRepository) : IDoma
         description: MultipartBody.Part,
         photo: MultipartBody.Part
     ) = iDomainRepository.postReportData(username, damage, location, description, photo)
+
+    override fun getHistoryData() = iDomainRepository.getHistoryData()
 }

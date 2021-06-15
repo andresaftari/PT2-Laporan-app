@@ -100,4 +100,28 @@ class RemoteDataSource(private val apiService: ApiService) {
             emit(ResponseStatus.Error(ex.message.toString()))
         }
     }.flowOn(Dispatchers.IO)
+
+    // Setup history source flow
+    fun getHistoryData() = flow {
+        try {
+            val response = apiService.getHistory()
+
+            response.let {
+                if (response.isNotEmpty()) emit(ResponseStatus.Success(it))
+                else emit(ResponseStatus.Empty)
+            }
+        } catch (ex: RuntimeException) {
+            Log.d(
+                "$REMOTE_DATA_CHECK.getHistory",
+                "${ex.message} - ${ex.printStackTrace()}"
+            )
+            emit(ResponseStatus.Error(ex.message.toString()))
+        } catch (ex: Exception) {
+            Log.d(
+                "$REMOTE_DATA_CHECK.getHistory",
+                "${ex.message} - ${ex.printStackTrace()}"
+            )
+            emit(ResponseStatus.Error(ex.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 }

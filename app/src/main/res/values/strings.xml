@@ -27,4 +27,12 @@
     <string name="hint_evidence">Bukti Keluhan</string>
     <string name="hint_description">Deskripsi</string>
     <string name="text_success">Laporan berhasil terkirim!</string>
+    <string name="title_activity_history">HistoryActivity</string>
+
+    <!-- Tab Menu -->
+    <string name="tab_process">In Process</string>
+    <string name="tab_fixed">Fixed</string>
+    <string name="tab_broken">Broken</string>
+    <string name="textNoHistory">Tidak ada riwayat laporan</string>
+    <string name="history">History</string>
 </resources>

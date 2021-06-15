@@ -31,4 +31,13 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
+
+    <style name="Theme.TelUNyarios.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.TelUNyarios.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TelUNyarios.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
