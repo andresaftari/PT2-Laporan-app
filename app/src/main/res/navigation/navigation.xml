@@ -8,15 +8,10 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="org.ray.nyarioskeun.ui.home.HomeFragment"
-        android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_reportFragment"
-            app:destination="@id/reportFragment"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit"
-            app:popEnterAnim="@anim/fragment_open_enter"
-            app:popExitAnim="@anim/fragment_open_exit" />
+            app:destination="@id/reportFragment" />
 
         <argument
             android:name="status"

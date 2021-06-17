@@ -20,9 +20,12 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.hasExtra("EXTRA_USERNAME")) {
             val data = intent.getStringExtra("EXTRA_USERNAME")
+            val fullname = intent.getStringExtra("EXTRA_FULLNAME")
             Log.d("$ARGUMENTS_CHECK.username", "$data")
+            Log.d("$ARGUMENTS_CHECK.fullname", "$fullname")
 
-            Account(username = "$data")
+            Account(username = "$data", fullname = "$fullname")
+            supportActionBar?.title = fullname
         }
 
         navController = findNavController(R.id.myNavHostFragment)

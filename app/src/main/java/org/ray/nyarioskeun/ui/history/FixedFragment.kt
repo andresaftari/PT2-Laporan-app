@@ -39,7 +39,7 @@ class FixedFragment : Fragment() {
 
                         it.data?.forEach { item ->
                             val status = item.status
-                            if (status == "fixed") arrOfData.add(item)
+                            if (status == "repaired") arrOfData.add(item)
                         }
 
                         if (arrOfData.isNotEmpty()) {

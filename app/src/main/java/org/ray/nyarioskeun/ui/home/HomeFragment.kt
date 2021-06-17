@@ -13,6 +13,7 @@ import org.ray.core.domain.model.Menus
 import org.ray.nyarioskeun.MainActivity
 import org.ray.nyarioskeun.R
 import org.ray.nyarioskeun.databinding.FragmentHomeBinding
+import org.ray.nyarioskeun.ui.WelcomeActivity
 import org.ray.nyarioskeun.ui.history.HistoryActivity
 import org.ray.nyarioskeun.utils.ARGUMENTS_CHECK
 import org.ray.nyarioskeun.utils.MenuAdapter
@@ -74,7 +75,15 @@ class HomeFragment : Fragment() {
                         HistoryActivity::class.java
                     )
                 )
-
+                return true
+            }
+            R.id.action_logout -> {
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        WelcomeActivity::class.java
+                    ).putExtra("LOGOUT_MESSAGE", "Anda berhasil Logout!")
+                )
                 return true
             }
         }

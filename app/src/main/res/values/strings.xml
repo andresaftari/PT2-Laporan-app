@@ -35,4 +35,5 @@
     <string name="tab_broken">Broken</string>
     <string name="textNoHistory">Tidak ada riwayat laporan</string>
     <string name="history">History</string>
+    <string name="text_logout">Logout</string>
 </resources>

@@ -19,7 +19,6 @@ class ProgressFragment : Fragment() {
 
     private val viewModel: HistoryViewModel by viewModel()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
