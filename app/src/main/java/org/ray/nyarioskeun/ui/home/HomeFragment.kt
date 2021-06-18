@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                     Intent(
                         requireContext(),
                         HistoryActivity::class.java
-                    )
+                    ).putExtra("USERNAME_HISTORY", account.username)
                 )
                 return true
             }

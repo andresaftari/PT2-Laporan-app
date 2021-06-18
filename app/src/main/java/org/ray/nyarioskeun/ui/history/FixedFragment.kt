@@ -1,6 +1,8 @@
 package org.ray.nyarioskeun.ui.history
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.ray.core.data.remote.api.response.ResponseHistory
+import org.ray.core.domain.model.Account
 import org.ray.core.utils.Status
 import org.ray.nyarioskeun.databinding.FragmentFixedBinding
 import org.ray.nyarioskeun.utils.HistoryAdapter
+import org.ray.nyarioskeun.utils.PASSED_DATA_CHECK
 
+@SuppressLint("LogNotTimber")
 class FixedFragment : Fragment() {
     private lateinit var binding: FragmentFixedBinding
     private lateinit var historyAdapter: HistoryAdapter
 
     private val viewModel: HistoryViewModel by viewModel()
+    private var account = Account()
+
+    private var username: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +33,14 @@ class FixedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFixedBinding.inflate(layoutInflater, container, false)
+
+        if (activity?.intent!!.hasExtra("USERNAME_HISTORY")) {
+            username = activity?.intent?.getStringExtra("USERNAME_HISTORY")
+
+            Log.d("$PASSED_DATA_CHECK.username.history", "$username")
+            account = Account(username = username)
+        }
+
         return binding.root
     }
 
@@ -39,7 +55,7 @@ class FixedFragment : Fragment() {
 
                         it.data?.forEach { item ->
                             val status = item.status
-                            if (status == "repaired") arrOfData.add(item)
+                            if (status == "repaired" && item.username == username) arrOfData.add(item)
                         }
 
                         if (arrOfData.isNotEmpty()) {
