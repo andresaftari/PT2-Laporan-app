@@ -16,7 +16,7 @@ object ImageCompressor {
             System.currentTimeMillis().toString() + "_image.png"
         )
         val byteArrayStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayStream)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayStream)
         val bitmapdata: ByteArray = byteArrayStream.toByteArray()
 
         // Write the bytes in file
