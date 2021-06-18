@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="160dp"
         android:layout_marginTop="24dp"
-        android:src="@drawable/telkom_logo"
+        android:src="@drawable/splash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
